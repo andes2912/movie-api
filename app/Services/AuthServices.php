@@ -46,6 +46,11 @@ class AuthServices {
         $token = $user->createToken('auth_token')->plainTextToken;
 
         $result = collect($user)->merge(['token'=>$token]);
+
+        if (!$user->isActive()) {
+            auth()->logout();
+            return $this->responseFailed('Akun Anda tidak aktif');
+        }
         return $this->responseSuccess(200, 'Login Success.', $result);
       }else{
         throw new ErrorException("Username atau Password Salah!");
