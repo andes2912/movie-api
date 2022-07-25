@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Backend\Entities\Movie;
 use Illuminate\Support\Str;
+use Modules\Backend\Entities\Keyword;
 use Modules\Backend\Entities\LinkMovie;
+use Modules\Backend\Entities\Tag;
 
 class MovieService {
   use ClientResponderHelper;
@@ -47,6 +49,16 @@ class MovieService {
         ]);
       }
 
+      Tag::create([
+        'movie_id'  => $movie->id,
+        'name'      => $params['tag']
+      ]);
+
+      Keyword::create([
+        'movie_id'  => $movie->id,
+        'name'      => $params['keyword']
+      ]);
+
       DB::commit();
       return $this->responseSuccess(200, 'success', $movie);
     } catch (\Exception $e) {
@@ -60,7 +72,7 @@ class MovieService {
     try {
       $search = $params['search'] ?? null;
 
-      $list = Movie::with(['LinkMovies'])->where('title', 'LIKE',"%{$search}%")->paginate(10);
+      $list = Movie::with(['LinkMovies','tags','keywords'])->where('title', 'LIKE',"%{$search}%")->paginate(10);
       return $this->responseSuccess(200,'success', $list);
     } catch (\Exception $e) {
       return $this->responseFailed($e->getMessage());
@@ -104,6 +116,15 @@ class MovieService {
         $link->updated_by  = Auth::id();
         $link->update();
       }
+
+      Tag::where('movie_id', $movie->id)->update([
+        'name' => $params['tag']
+      ]);
+
+      Keyword::where('movie_id', $movie->id)->update([
+        'name' => $params['keyword']
+      ]);
+
       DB::commit();
       return $this->responseSuccess(200,'success', $movie);
     } catch (\Exception $e) {

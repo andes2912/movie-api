@@ -24,6 +24,8 @@ class MovieRequest extends FormRequest
         'adult'             => ["required", Rule::in('0','1')],
         'release_date'      => 'required|date',
         'url_trailer'       => 'required',
+        'tag'               => 'required|array',
+        'keyword'           => 'required|array',
         'link.*.url_movie'  => 'required'
       ];
     }

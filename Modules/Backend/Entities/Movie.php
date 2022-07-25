@@ -26,4 +26,14 @@ class Movie extends Model
     {
       return $this->hasMany(LinkMovie::class);
     }
+
+    public function tags()
+    {
+      return $this->hasOne(Tag::class,'movie_id');
+    }
+
+    public function keywords()
+    {
+      return $this->hasOne(Keyword::class,'movie_id');
+    }
 }
