@@ -33,7 +33,7 @@ class MovieService {
         'slug'          => Str::slug($params['title']),
         'thumbnail'     => $thumbnail,
         'description'   => $params['description'],
-        'genre'         => $params['genre'],
+        'genre'         => implode(',',$params['genre']),
         'adult'         => $params['adult'],
         'release_date'  => $params['release_date'],
         'url_trailer'   => $params['url_trailer'],
@@ -72,7 +72,7 @@ class MovieService {
     try {
       $search = $params['search'] ?? null;
 
-      $list = Movie::with(['LinkMovies','tags','keywords'])->where('title', 'LIKE',"%{$search}%")->paginate(10);
+      $list = Movie::with(['LinkMovies','tags','keywords'])->where('title', 'LIKE',"%{$search}%")->orderBy('created_at','desc')->paginate(10);
       return $this->responseSuccess(200,'success', $list);
     } catch (\Exception $e) {
       return $this->responseFailed($e->getMessage());
@@ -99,7 +99,7 @@ class MovieService {
        $movie->title        = $params['title'] ?? $movie->title;
        $movie->thumbnail    = $thumbnail ?? $movie->thumbnail;
        $movie->description  = $params['description'] ?? $movie->description;
-       $movie->genre        = $params['genre'] ?? $movie->genre;
+       $movie->genre        = implode(',',$params['genre']) ?? $movie->genre;
        $movie->adult        = $params['adult'] ?? $movie->adult;
        $movie->release_date = $params['release_date'] ?? $movie->release_date;
        $movie->url_trailer  = $params['url_trailer'] ?? $movie->url_trailer;
