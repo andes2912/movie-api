@@ -38,6 +38,7 @@ class FrontendService {
             $slug = $params['slug'];
             $detail = Movie::where('slug', $slug)->first();
             if(!$detail) throw new Exception("Movie Not Found.");
+            $detail->increment('count');
             return $this->responseSuccess(200,'success', $detail);
         } catch (\Exception $e) {
             return $this->responseFailed($e->getMessage());
