@@ -9,6 +9,8 @@ use Modules\Backend\Services\MovieService;
 
 class BackendController extends Controller
 {
+    protected $service;
+
     public function __construct(MovieService $service)
     {
       $this->service = $service;
