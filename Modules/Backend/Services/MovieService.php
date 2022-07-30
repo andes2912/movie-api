@@ -35,6 +35,7 @@ class MovieService {
         'description'   => $params['description'],
         'genre'         => implode(',',$params['genre']),
         'adult'         => $params['adult'],
+        'country'       => $params['country'],
         'release_date'  => $params['release_date'],
         'url_trailer'   => $params['url_trailer'],
         'created_by'    => Auth::id()
@@ -101,6 +102,7 @@ class MovieService {
        $movie->description  = $params['description'] ?? $movie->description;
        $movie->genre        = implode(',',$params['genre']) ?? $movie->genre;
        $movie->adult        = $params['adult'] ?? $movie->adult;
+       $movie->country      = $params['country'] ?? $movie->country;
        $movie->release_date = $params['release_date'] ?? $movie->release_date;
        $movie->url_trailer  = $params['url_trailer'] ?? $movie->url_trailer;
        $movie->updated_by   = Auth::id();
