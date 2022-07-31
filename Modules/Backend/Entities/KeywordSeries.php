@@ -9,10 +9,9 @@ class KeywordSeries extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $guarded = [];
 
-    protected static function newFactory()
-    {
-        return \Modules\Backend\Database\factories\KeywordSeriesFactory::new();
-    }
+    protected $casts = [
+        'name' => 'array'
+    ];
 }

@@ -9,10 +9,9 @@ class TagSeries extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $guarded = [];
 
-    protected static function newFactory()
-    {
-        return \Modules\Backend\Database\factories\TagSeriesFactory::new();
-    }
+    protected $casts = [
+        'name' => 'array'
+    ];
 }

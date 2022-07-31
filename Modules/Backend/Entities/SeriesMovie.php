@@ -9,10 +9,5 @@ class SeriesMovie extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
-
-    protected static function newFactory()
-    {
-        return \Modules\Backend\Database\factories\SeriesMovieFactory::new();
-    }
+    protected $guarded = [];
 }
