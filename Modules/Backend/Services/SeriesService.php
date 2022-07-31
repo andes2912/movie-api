@@ -79,4 +79,50 @@ class SeriesService {
             return $this->responseFailed($e->getMessage());
         }
     }
+
+    // List Series
+    public function list($params)
+    {
+        try {
+            $search = $params['search'] ?? null;
+            $series = Series::with(
+                [
+                    'SeriesMovies.linkSeries',
+                    'SeriesMovies.tagSeries',
+                    'SeriesMovies.keywordSeries'
+                ]
+            )
+            ->where('title', 'LIKE',"%{$search}%")
+            ->orderBy('created_at','desc')
+            ->get();
+            return $this->responseSuccess(200, 'success', $series);
+        } catch (\Exception $e) {
+            return $this->responseFailed($e->getMessage());
+        }
+    }
+
+    // Detail Series
+    public function detail($params)
+    {
+        try {
+            $slug   = $params['name'] ?? null;
+            $season = $params['season'] ;
+            $episode = $params['episode'] ;
+
+            $series = Series::with(
+                [
+                    'SeriesMovies.linkSeries',
+                    'SeriesMovies' => function ($search) use($season, $episode) {
+                        $search->where('season', 'LIKE',"%{$season}%")
+                        ->where('episode', 'LIKE',"%{$episode}%");
+                    }
+                ]
+            )
+            ->where('slug',$slug)
+            ->first();
+            return $this->responseSuccess(200, 'success', $series);
+        } catch (\Exception $e) {
+            return $this->responseFailed($e->getMessage());
+        }
+    }
 }

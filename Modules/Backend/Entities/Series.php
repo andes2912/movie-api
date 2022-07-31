@@ -10,4 +10,9 @@ class Series extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function SeriesMovies()
+    {
+        return $this->hasMany(SeriesMovie::class);
+    }
 }

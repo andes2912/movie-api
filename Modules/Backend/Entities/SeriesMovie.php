@@ -10,4 +10,19 @@ class SeriesMovie extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function linkSeries()
+    {
+        return $this->hasMany(LinkSeries::class);
+    }
+
+    public function tagSeries()
+    {
+       return $this->hasOne(TagSeries::class);
+    }
+
+    public function keywordSeries()
+    {
+        return $this->hasOne(keywordSeries::class);
+    }
 }
