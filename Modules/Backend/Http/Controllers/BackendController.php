@@ -5,29 +5,41 @@ namespace Modules\Backend\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Backend\Http\Requests\MovieRequest;
+use Modules\Backend\Http\Requests\SeriesRequest;
 use Modules\Backend\Services\MovieService;
+use Modules\Backend\Services\SeriesService;
 
 class BackendController extends Controller
 {
-    protected $service;
+    protected $ServiceMovie, $ServiceSeries;
 
-    public function __construct(MovieService $service)
+    public function __construct(MovieService $ServiceMovie, SeriesService $ServiceSeries)
     {
-      $this->service = $service;
+      $this->ServiceMovie = $ServiceMovie;
+      $this->ServiceSeries = $ServiceSeries;
     }
 
+    // Create Movie
     public function InsertMovieService(MovieRequest $request)
     {
-      return $this->service->InsertMovie($request->all());
+      return $this->ServiceMovie->InsertMovie($request->all());
     }
 
+    // List Movie
     public function ListMovieService(Request $request)
     {
-      return $this->service->ListMovie($request);
+      return $this->ServiceMovie->ListMovie($request);
     }
 
+    // Update Movie
     public function UpdateMovieService(Request $request)
     {
-      return $this->service->UpdateMovie($request->all());
+      return $this->ServiceMovie->UpdateMovie($request->all());
+    }
+
+    // Create Series
+    public function CreateSeriesService(SeriesRequest $request)
+    {
+        return $this->ServiceSeries->insert($request);
     }
 }
