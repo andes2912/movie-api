@@ -26,6 +26,8 @@ Route::prefix('backend')->middleware('auth:sanctum')->group( function(){
 
     // Series
     Route::prefix('series')->group(function() {
+        Route::get('',[BackendController::class,'ListSeriesService']);
+        Route::get('detail',[BackendController::class,'DetailSeriesService']);
         Route::post('insert',[BackendController::class,'CreateSeriesService']);
     });
   });

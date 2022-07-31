@@ -42,4 +42,16 @@ class BackendController extends Controller
     {
         return $this->ServiceSeries->insert($request);
     }
+
+    // List Series
+    public function ListSeriesService(Request $request)
+    {
+        return $this->ServiceSeries->list($request);
+    }
+
+    // Detail Series
+    public function DetailSeriesService(Request $request)
+    {
+        return $this->ServiceSeries->detail($request);
+    }
 }
