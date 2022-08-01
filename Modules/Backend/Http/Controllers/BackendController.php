@@ -5,6 +5,7 @@ namespace Modules\Backend\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Backend\Http\Requests\MovieRequest;
+use Modules\Backend\Http\Requests\SeasonSeriesRequest;
 use Modules\Backend\Http\Requests\SeriesRequest;
 use Modules\Backend\Services\MovieService;
 use Modules\Backend\Services\SeriesService;
@@ -53,5 +54,11 @@ class BackendController extends Controller
     public function DetailSeriesService(Request $request)
     {
         return $this->ServiceSeries->detail($request);
+    }
+
+    // Create season & episode series
+    public function CreateSeasonSeriesService(SeasonSeriesRequest $request)
+    {
+        return $this->ServiceSeries->createSeries($request);
     }
 }

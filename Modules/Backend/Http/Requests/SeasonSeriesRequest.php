@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class SeriesRequest extends FormRequest
+class SeasonSeriesRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,14 +17,7 @@ class SeriesRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'             => 'required|unique:movies,title',
-            'thumbnail'         => 'required|mimes:jpg,jpeg,png|max:3000',
-            'description'       => 'required',
-            'genre'             => 'required',
-            'adult'             => ["required", Rule::in('0','1')],
-            'country'           => 'required',
-            'status'            => 'required',
-            'release_date'      => 'required|date',
+            'series_id'         => 'required|exists:series,id',
             'season'            => 'required|numeric',
             'episode'           => 'required|numeric',
             'url_trailer'       => 'required',
@@ -55,4 +48,5 @@ class SeriesRequest extends FormRequest
             ], 422)
         );
     }
+
 }
