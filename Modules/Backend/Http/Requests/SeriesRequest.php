@@ -17,7 +17,7 @@ class SeriesRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'             => 'required|unique:movies,title',
+            'title'             => 'required|unique:series,title',
             'thumbnail'         => 'required|mimes:jpg,jpeg,png|max:3000',
             'description'       => 'required',
             'genre'             => 'required',
