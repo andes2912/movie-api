@@ -101,6 +101,51 @@ class SeriesService {
         }
     }
 
+    // Create Episode & Season Series
+    public function createSeries($params)
+    {
+        try {
+            DB::beginTransaction();
+            $link = $params['link'];
+
+            $seriesMovie = SeriesMovie::create([
+                'series_id'     => $params['series_id'],
+                'season'        => $params['season'],
+                'episode'       => $params['episode'],
+                'count'         => 0,
+                'created_by'    => Auth::id()
+            ]);
+
+            // Create Link Series
+            foreach ($link as $key => $links) {
+                $link = LinkSeries::create([
+                    'series_movie_id'   => $seriesMovie->id,
+                    'url_series'        => $links['url_series'],
+                    'is_active'         => TRUE,
+                    'created_by'        => Auth::id()
+                ]);
+            }
+
+              // Create Tag
+            TagSeries::create([
+                'series_movie_id'   => $seriesMovie->id,
+                'name'              => $params['name_tag']
+            ]);
+
+            // Create Keyword
+            KeywordSeries::create([
+                'series_movie_id'   => $seriesMovie->id,
+                'name'              => $params['name_keyword']
+            ]);
+
+            DB::commit();
+            return $this->responseSuccess(200, 'success', $seriesMovie);
+
+        } catch (\Exception $e) {
+            return $this->responseFailed($e->getMessage());
+        }
+    }
+
     // Detail Series
     public function detail($params)
     {
